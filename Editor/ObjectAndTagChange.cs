@@ -10,9 +10,11 @@ namespace __yky.ObjectAndTagChange.Editor
         private static readonly Dictionary<int, string> OriginalTags = new();
         private static readonly Dictionary<int, bool> WasActives = new();
         private const string EditorOnlyTag = "EditorOnly";
+        private const string MenuPath = "Tools/Set Object and Tag #e";
+        private const string MenuPath2 = "GameObject/yky/Set Object and Tag";
 
-        [MenuItem("Tools/Set Object and Tag #e")]
-        [MenuItem("GameObject/yky/Set Object and Tag")]
+        [MenuItem(MenuPath)]
+        [MenuItem(MenuPath2)]
         private static void ToggleInactiveAndTag(MenuCommand menuCommand)
         {
             if (!ShouldExecute(menuCommand)) return;
