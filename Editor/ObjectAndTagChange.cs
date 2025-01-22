@@ -13,8 +13,10 @@ namespace __yky.ObjectAndTagChange.Editor
 
         [MenuItem("Tools/Set Object and Tag #e")]
         [MenuItem("GameObject/yky/Set Object and Tag")]
-        private static void ToggleInactiveAndTag()
+        private static void ToggleInactiveAndTag(MenuCommand menuCommand)
         {
+            if (!ShouldExecute(menuCommand)) return;
+
             var selectedObjects = Selection.gameObjects;
 
             if (selectedObjects.Length < 1)
@@ -26,7 +28,7 @@ namespace __yky.ObjectAndTagChange.Editor
             foreach (var obj in selectedObjects)
             {
                 var id = obj.GetInstanceID();
-                
+
                 if (obj.activeSelf)
                 {
                     if (!OriginalTags.ContainsKey(id))
@@ -34,7 +36,7 @@ namespace __yky.ObjectAndTagChange.Editor
                         OriginalTags.TryAdd(id, obj.tag);
                         WasActives.TryAdd(id, obj.activeSelf);
                     }
-                    
+
                     Undo.RecordObject(obj, "Change EditorOnly");
                     obj.SetActive(false);
                     obj.tag = EditorOnlyTag;
@@ -55,6 +57,13 @@ namespace __yky.ObjectAndTagChange.Editor
 
                 EditorUtility.SetDirty(obj);
             }
+        }
+
+        // https://discussions.unity.com/t/how-to-execute-menuitem-for-multiple-objects-once/91492/5
+        private static bool ShouldExecute(MenuCommand menuCommand)
+        {
+            if (menuCommand.context == null) return true;
+            return menuCommand.context == Selection.activeObject;
         }
     }
 }
