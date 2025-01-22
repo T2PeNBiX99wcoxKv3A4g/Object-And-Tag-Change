@@ -26,14 +26,15 @@ namespace __yky.ObjectAndTagChange.Editor
             foreach (var obj in selectedObjects)
             {
                 var id = obj.GetInstanceID();
-                if (!OriginalTags.ContainsKey(id))
-                {
-                    OriginalTags.TryAdd(id, obj.tag);
-                    WasActives.TryAdd(id, obj.activeSelf);
-                }
-
+                
                 if (obj.activeSelf)
                 {
+                    if (!OriginalTags.ContainsKey(id))
+                    {
+                        OriginalTags.TryAdd(id, obj.tag);
+                        WasActives.TryAdd(id, obj.activeSelf);
+                    }
+                    
                     Undo.RecordObject(obj, "Change EditorOnly");
                     obj.SetActive(false);
                     obj.tag = EditorOnlyTag;
