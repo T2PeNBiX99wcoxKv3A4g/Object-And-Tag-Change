@@ -10,6 +10,7 @@ namespace __yky.ObjectAndTagChange.Editor
         private static readonly Dictionary<int, string> OriginalTags = new();
         private static readonly Dictionary<int, bool> WasActives = new();
         private const string EditorOnlyTag = "EditorOnly";
+        private const string UntaggedTag = "Untagged";
         private const string MenuPath = "Tools/Set Object and Tag #e";
         private const string MenuPath2 = "GameObject/yky/Set Object and Tag";
 
@@ -51,7 +52,7 @@ namespace __yky.ObjectAndTagChange.Editor
                     Undo.RecordObject(obj, "Undo Tag");
                     obj.SetActive(!hasActive || wasActive);
                     if (obj.CompareTag(EditorOnlyTag))
-                        obj.tag = hasOriginalTag && originalTag != EditorOnlyTag ? originalTag : "";
+                        obj.tag = hasOriginalTag && originalTag != EditorOnlyTag ? originalTag : UntaggedTag;
 
                     OriginalTags.Remove(id);
                     WasActives.Remove(id);
