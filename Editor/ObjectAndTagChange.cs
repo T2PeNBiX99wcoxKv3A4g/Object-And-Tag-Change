@@ -51,7 +51,7 @@ namespace __yky.ObjectAndTagChange.Editor
                     Undo.RecordObject(obj, "Undo Tag");
                     obj.SetActive(!hasActive || wasActive);
                     if (obj.CompareTag(EditorOnlyTag))
-                        obj.tag = hasOriginalTag ? originalTag : "";
+                        obj.tag = hasOriginalTag && originalTag != EditorOnlyTag ? originalTag : "";
 
                     OriginalTags.Remove(id);
                     WasActives.Remove(id);
